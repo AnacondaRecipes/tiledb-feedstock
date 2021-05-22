@@ -32,9 +32,10 @@ requirements:
     - zlib
     - bzip2
     - zstd
-    - openssl
-    - libcurl
+    - openssl   # [not win]
+    - libcurl   # [not win]
     - lz4-c
+    - aws-sdk-cpp
     - curl  # [arm64]
   run:
     - zlib
@@ -42,7 +43,8 @@ requirements:
     - zstd
     - lz4-c
     - curl  # [arm64]
-
+  run_constrained:                                              # [osx]
+    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.12") }}   # [osx]
 
 test:
   #  downstreams:

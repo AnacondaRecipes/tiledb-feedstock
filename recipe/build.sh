@@ -7,6 +7,13 @@ export NN_CC_ORIG=$CC
 export CXX=$RECIPE_DIR/cxx_wrap.sh
 export CC=$RECIPE_DIR/cc_wrap.sh
 
+
+declare -a CMAKE_PLATFORM_FLAGS
+if [[ ${target_platform} == osx-64 ]]; then
+  CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_SYSROOT="${CONDA_BUILD_SYSROOT}")
+  CMAKE_PLATFORM_FLAGS+=(-DCMAKE_OSX_DEPLOYMENT_TARGET="${MACOSX_DEPLOYMENT_TARGET}")
+fi
+
 if [[ $target_platform =~ osx-arm64 ]]; then
   CURL_LIBS_APPEND=`$PREFIX/bin/curl-config --libs`
   export LDFLAGS="${LDFLAGS} ${CURL_LIBS_APPEND}"
@@ -15,6 +22,7 @@ fi
 mkdir build && cd build
 cmake ${CMAKE_ARGS} \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
+  -DCMAKE_PREFIX_PATH=${PREFIX} \
   -DCMAKE_BUILD_TYPE=Release \
   -DTILEDB_WERROR=OFF \
   -DTILEDB_TESTS=OFF \
@@ -25,6 +33,7 @@ cmake ${CMAKE_ARGS} \
   -DTILEDB_SERIALIZATION=ON \
   -DTILEDB_LOG_OUTPUT_ON_FAILURE=ON \
   -DTILEDB_AZURE=ON \
+  "${CMAKE_PLATFORM_FLAGS[@]}" \
   ..
 make -j ${CPU_COUNT}
 make -C tiledb install
