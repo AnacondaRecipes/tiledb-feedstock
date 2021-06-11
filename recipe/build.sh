@@ -25,10 +25,14 @@ else
   CMAKE_PLATFORM_FLAGS+=(-DCMAKE_TOOLCHAIN_FILE="${RECIPE_DIR}/cross-linux.cmake")
 fi
 
+export CFLAGS="${CFLAGS} -Wno-maybe-uninitialized"
+export CXXFLAGS="${CXXFLAGS} -Wno-=maybe-uninitialized"
+
 mkdir build && cd build
 cmake \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_CXX_FLAGS="$CMAKE_CXX_FLAGS -Wno-error" \
   -DTILEDB_WERROR=OFF \
   -DTILEDB_TESTS=OFF \
   -DTILEDB_INSTALL_LIBDIR=lib \
@@ -36,7 +40,10 @@ cmake \
   -DSANITIZER="OFF;-DCOMPILER_SUPPORTS_AVX2:BOOL=FALSE" \
   -DTILEDB_S3=ON \
   -DTILEDB_SERIALIZATION=ON \
-  ${CMAKE_PLATFORM_FLAGS[@]} \
+  -DTILEDB_LOG_OUTPUT_ON_FAILURE=ON \
   ..
+
+#  ${CMAKE_PLATFORM_FLAGS[@]}
+
 make -j ${CPU_COUNT}
 make -C tiledb install

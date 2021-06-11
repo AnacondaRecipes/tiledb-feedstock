@@ -26,7 +26,7 @@ build:
 requirements:
   build:
     - cmake
-    - make # [not win]
+    - make # [unix]
     - pkg-config  # [not win]
     - {{ compiler('cxx') }}
   host:
@@ -37,6 +37,8 @@ requirements:
     - libcurl
     - lz4-c
     - tbb-devel 2018.0.5
+    - curl
+    - libcurl
   run:
     - zlib
     - bzip2
