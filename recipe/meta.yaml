@@ -23,26 +23,25 @@ build:
 
 requirements:
   build:
-    - make  # [unix]
     - cmake
-    - make # [not win]
-    - pkg-config  # [not win]
+    - make         # [not win]
+    - pkg-config   # [not win]
     - {{ compiler('cxx') }}
   host:
     - zlib
     - bzip2
     - zstd
-    - openssl   # [not win]
-    - libcurl   # [not win]
+    - openssl      # [not win]
+    - libcurl      # [not win]
     - lz4-c
     - aws-sdk-cpp
-    - curl  # [arm64]
+    - curl         # [not win]
   run:
     - zlib
     - bzip2
     - zstd
     - lz4-c
-    - curl  # [arm64]
+    - curl         # [not win]
   run_constrained:                                              # [osx]
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.12") }}   # [osx]
 
