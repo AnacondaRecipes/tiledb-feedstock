@@ -1,55 +1,40 @@
 {% set name = "TileDB" %}
-{% set version = "1.6.3" %}
-{% set sha256 = "12b70176822a04423093db741376d2bf0c3867b535e7dc4ee8dfa9a8444611fc" %}
+{% set version = "2.3.3" %}
 
 package:
   name: tiledb
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://github.com/TileDB-Inc/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: {{ sha256 }}
-  patches:
-    - 0001-Conda-only-patch-capnproto-build-to-work-with-anacon.patch
-    # this is unnecessary with the cmake fix
-    # but homebrew openssl was being found on build workers
-    #    - 0001-disable-homebrew-ssl-search-path.patch
+  sha256: ca65e01788e7149bcdef9aeab9b1449169da3e538eec6200064b06603747db1b
 
 build:
   number: 0
   run_exports:
-    # no ABI info but the so breaks in minor releases
-    - {{ pin_subpackage('tiledb') }}
-  skip: True  # [win and vc<14]
+    # https://abi-laboratory.pro/?view=timeline&l=tiledb
+    - {{ pin_subpackage('tiledb', 'x.x') }}
+  skip: true  # [win and vc<14]
 
 requirements:
   build:
+    - make  # [unix]
     - cmake
-    - make # [unix]
     - pkg-config  # [not win]
     - {{ compiler('cxx') }}
   host:
     - zlib
     - bzip2
     - zstd
-    - openssl
-    - libcurl
     - lz4-c
-    - tbb-devel 2018.0.5
-    - curl
-    - libcurl
+    - curl  # [arm64]
   run:
     - zlib
     - bzip2
     - zstd
     - lz4-c
-    - tbb 2018.0.5
-    # libcurl is a dep of curl, but overlinking checks error here..
-    - libcurl
-    - curl
-    # linkage to libcrypto that also triggers overlinking
-    - openssl
+    - curl  # [arm64]
+
 
 test:
   #  downstreams:
@@ -57,8 +42,7 @@ test:
   commands:
     - test -e $PREFIX/include/tiledb/tiledb.h  # [not win]
     - test -e $PREFIX/include/tiledb/tiledb  # [not win]
-    - test -e $PREFIX/lib/libtiledb$SHLIB_EXT  # [linux]
-    - test -e $PREFIX/lib/libtiledb$SHLIB_EXT  # [osx]
+    - test -e $PREFIX/lib/libtiledb$SHLIB_EXT  # [not win]
 
     - if exist %LIBRARY_INC%\\tiledb\\tiledb (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_INC%\\tiledb\\tiledb.h (exit 0) else (exit 1)  # [win]
@@ -71,7 +55,7 @@ about:
   license: MIT
   license_family: MIT
   license_file: LICENSE
-  summary: 'TileDB sparse and dense multi-dimensional array data management'
+  summary: TileDB sparse and dense multi-dimensional array data management
   description: |
     TileDB is an efficient multi-dimensional array management system which introduces
     a novel on-disk format that can effectively store dense and sparse array data with
@@ -83,6 +67,6 @@ about:
 extra:
   recipe-maintainers:
     - stavrospapadopoulos
-    - jakebolewski
-    - tdenniston
+    - shelnutt2
     - ihnorton
+    - nguyenv
