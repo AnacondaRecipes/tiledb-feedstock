@@ -10,30 +10,39 @@ source:
   sha256: ca65e01788e7149bcdef9aeab9b1449169da3e538eec6200064b06603747db1b
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', 'x.x') }}
   skip: true  # [win and vc<14]
-
+  missing_dso_whitelist:  # [linux and s390x]
+    - $RPATH/ld64.so.1    # [linux and s390x]
 requirements:
   build:
-    - make  # [unix]
-    - cmake
+    - make  # [not win]
+    - git   # [not win]
+    - sed   # [not win]
+    - gawk  # [not win]
+    - cmake >=3.3
+    - patch  # [not win]
     - pkg-config  # [not win]
+    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
     - zlib
     - bzip2
     - zstd
     - lz4-c
-    - curl  # [arm64]
+    - curl  # [not win]
+    - openssl  # [not win]
   run:
     - zlib
     - bzip2
     - zstd
     - lz4-c
-    - curl  # [arm64]
+    - curl  # [not win]
+    - libcurl  # [not win]
+    - openssl  # [not win]
 
 
 test:
