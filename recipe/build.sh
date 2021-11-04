@@ -13,8 +13,12 @@ if [[ $target_platform =~ osx-arm64 ]]; then
   export LDFLAGS="${LDFLAGS} ${CURL_LIBS_APPEND}"
 fi
 
-if [[ $target_platform  == linux-64 ]] || [[ $target_platform  == linux-aarch64 ]]; then
-  export LDFLAGS="${LDFLAGS} -Wl,--no-as-needed -lrt"
+if [[ $target_platform  == linux-64 ]]; then
+  export LDFLAGS="${LDFLAGS} -Wl,--no-as-needed"
+fi
+
+if [[ $target_platform == linux-* ]]; then
+  export LDFLAGS="${LDFLAGS} -lrt"
 fi
 
 mkdir build && cd build
