@@ -10,7 +10,7 @@ source:
   sha256: ca65e01788e7149bcdef9aeab9b1449169da3e538eec6200064b06603747db1b
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', 'x.x') }}
@@ -18,8 +18,12 @@ build:
 
 requirements:
   build:
-    - make  # [unix]
+    - make  # [not win]
+    - git   # [not win]
+    - sed   # [not win]
+    - gawk  # [not win]
     - cmake
+    - patch  # [not win]
     - pkg-config  # [not win]
     - {{ compiler('cxx') }}
   host:
@@ -27,13 +31,16 @@ requirements:
     - bzip2
     - zstd
     - lz4-c
-    - curl  # [arm64]
+    - curl  # [not win]
+    - openssl  # [not win]
   run:
     - zlib
     - bzip2
     - zstd
     - lz4-c
-    - curl  # [arm64]
+    - curl  # [not win]
+    - libcurl  # [not win]
+    - openssl  # [not win]
 
 
 test:
