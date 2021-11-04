@@ -7,6 +7,8 @@ export NN_CC_ORIG=$CC
 export CXX=$RECIPE_DIR/cxx_wrap.sh
 export CC=$RECIPE_DIR/cc_wrap.sh
 export CMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}
+chmod +x $CC
+chmod +x $CXX
 
 if [[ $target_platform =~ osx-arm64 ]]; then
   CURL_LIBS_APPEND=`$PREFIX/bin/curl-config --libs`
