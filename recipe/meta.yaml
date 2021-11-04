@@ -26,6 +26,7 @@ requirements:
     - cmake
     - patch  # [not win]
     - pkg-config  # [not win]
+    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
     - zlib
