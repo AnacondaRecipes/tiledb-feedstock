@@ -15,7 +15,8 @@ build:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', 'x.x') }}
   skip: true  # [win and vc<14]
-
+  missing_dso_whitelist:  # [linux and s390x]
+    - $RPATH/ld64.so.1    # [linux and s390x]
 requirements:
   build:
     - make  # [not win]
