@@ -23,7 +23,7 @@ requirements:
     - git   # [not win]
     - sed   # [not win]
     - gawk  # [not win]
-    - cmake
+    - cmake >=3.3
     - patch  # [not win]
     - pkg-config  # [not win]
     - {{ compiler('c') }}
