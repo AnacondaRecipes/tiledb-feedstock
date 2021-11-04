@@ -1,13 +1,12 @@
 #!/bin/sh
 set -exo pipefail
 
-if [[ $target_platform == linux-* ]]; then
-  # Use CC/CXX wrappers to disable -Werror
-  export NN_CXX_ORIG=$CXX
-  export NN_CC_ORIG=$CC
-  export CXX=$RECIPE_DIR/cxx_wrap.sh
-  export CC=$RECIPE_DIR/cc_wrap.sh
-fi
+# Use CC/CXX wrappers to disable -Werror
+export NN_CXX_ORIG=$CXX
+export NN_CC_ORIG=$CC
+export CXX=$RECIPE_DIR/cxx_wrap.sh
+export CC=$RECIPE_DIR/cc_wrap.sh
+
 export CMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}
 
 if [[ $target_platform =~ osx-arm64 ]]; then
