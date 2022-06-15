@@ -40,12 +40,6 @@ requirements:
     - lz4-c
     - aws-sdk-cpp
     - curl         # [not win]
-  run:
-    - zlib
-    - bzip2
-    - zstd
-    - lz4-c
-    - curl         # [not win]
   run_constrained:                                              # [osx]
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.12") }}   # [osx]
 
