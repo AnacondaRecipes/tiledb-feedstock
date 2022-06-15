@@ -4,8 +4,13 @@ set -exo pipefail
 # Use CC/CXX wrappers to disable -Werror
 export NN_CXX_ORIG=$CXX
 export NN_CC_ORIG=$CC
-export CXX=$RECIPE_DIR/cxx_wrap.sh
-export CC=$RECIPE_DIR/cc_wrap.sh
+export CXX="${RECIPE_DIR}/cxx_wrap.sh"
+export CC="${RECIPE_DIR}/cc_wrap.sh"
+
+# For some weird reason, ar is not picked up on linux-aarch64
+if [ $(uname -s) = "Linux" ] && [ ! -f "${BUILD_PREFIX}/bin/ar" ]; then
+    ln -s "${BUILD}-ar" "${BUILD_PREFIX}/bin/ar"
+fi
 
 export CMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}
 
