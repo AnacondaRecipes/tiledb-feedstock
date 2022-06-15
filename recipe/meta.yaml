@@ -15,18 +15,22 @@ source:
     #    - 0001-disable-homebrew-ssl-search-path.patch
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
-    - {{ pin_subpackage('tiledb', 'x.x') }}
-  skip: true  # [win and vc<14]
+    - {{ pin_subpackage('tiledb', max_pin='x.x') }}
+  # aws-sdk-cpp is not available on s390x and this version was never built there.
+  skip: true  # [win and vc<14 or s390x]
 
 requirements:
   build:
-    - cmake
+    # Later versions don't work with current AWS SDK
+    - cmake  <=3.21
     - make         # [not win]
     - pkg-config   # [not win]
     - {{ compiler('cxx') }}
+    - patch        # [not win]
+    - m2-patch     # [win]
   host:
     - zlib
     - bzip2
@@ -35,12 +39,6 @@ requirements:
     - libcurl      # [not win]
     - lz4-c
     - aws-sdk-cpp
-    - curl         # [not win]
-  run:
-    - zlib
-    - bzip2
-    - zstd
-    - lz4-c
     - curl         # [not win]
   run_constrained:                                              # [osx]
     - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.12") }}   # [osx]
