@@ -52,7 +52,7 @@ test:
     - if exist %PREFIX%\\Library\\bin\\tiledb.dll (exit 0) else (exit 1)  # [win]
 
 about:
-  home: http://tiledb.io
+  home: https://tiledb.io
   license: MIT
   license_family: MIT
   license_file: LICENSE
@@ -62,7 +62,7 @@ about:
     a novel on-disk format that can effectively store dense and sparse array data with
     support for fast updates and reads. It features excellent compression, and an efficient
     parallel I/O system with high scalability.
-  doc_url: http://docs.tiledb.io
+  doc_url: https://docs.tiledb.io
   dev_url: https://github.com/TileDB-Inc/TileDB
 
 extra:
