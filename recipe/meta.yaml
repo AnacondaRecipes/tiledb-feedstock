@@ -34,9 +34,8 @@ requirements:
     - zstd
     - lz4-c
     - curl  # [not win]
-    - openssl  # [not win]
-  run:
     - libcurl  # [not win]
+    - openssl  # [not win]
 
 test:
   #  downstreams:
