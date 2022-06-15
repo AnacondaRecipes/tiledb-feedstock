@@ -8,7 +8,7 @@ export CXX="${RECIPE_DIR}/cxx_wrap.sh"
 export CC="${RECIPE_DIR}/cc_wrap.sh"
 
 # For some weird reason, ar is not picked up on linux-aarch64
-if [ ! -f "${BUILD_PREFIX}/bin/ar" ]; then
+if [ $(uname -s) = "Linux" ] && [ ! -f "${BUILD_PREFIX}/bin/ar" ]; then
     ln -s "${BUILD}-ar" "${BUILD_PREFIX}/bin/ar"
 fi
 
