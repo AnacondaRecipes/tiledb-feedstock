@@ -18,12 +18,13 @@ build:
   number: 0
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
-    - {{ pin_subpackage('tiledb', 'x.x') }}
+    - {{ pin_subpackage('tiledb', max_pin='x.x') }}
   skip: true  # [win and vc<14]
 
 requirements:
   build:
-    - cmake
+    # Later versions don't work with current AWS SDK
+    - cmake  <=3.21
     - make         # [not win]
     - pkg-config   # [not win]
     - {{ compiler('cxx') }}
