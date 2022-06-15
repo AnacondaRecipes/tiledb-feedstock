@@ -28,6 +28,8 @@ requirements:
     - make         # [not win]
     - pkg-config   # [not win]
     - {{ compiler('cxx') }}
+    - patch        # [not win]
+    - m2-patch     # [win]
   host:
     - zlib
     - bzip2
