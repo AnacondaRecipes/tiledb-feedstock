@@ -8,6 +8,8 @@ package:
 source:
   url: https://github.com/TileDB-Inc/{{ name }}/archive/{{ version }}.tar.gz
   sha256: ca65e01788e7149bcdef9aeab9b1449169da3e538eec6200064b06603747db1b
+  patches:
+  - 0002-Don-t-link-to-fmt-library.-We-use-spdlog-s-embedded-.patch
 
 build:
   number: 3
@@ -27,6 +29,8 @@ requirements:
     - pkg-config  # [not win]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - patch  # [not win]
+    - m2-patch  # [win]
   host:
     - zlib {{ zlib }}
     - bzip2 {{ bzip2 }}

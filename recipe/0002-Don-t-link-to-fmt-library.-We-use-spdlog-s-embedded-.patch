@@ -1,0 +1,32 @@
+From f9733cf7f72f3997566679f37641a3240392e05f Mon Sep 17 00:00:00 2001
+From: Jean-Christophe Morin <jcmorin@anaconda.com>
+Date: Thu, 1 Jun 2023 17:51:51 -0400
+Subject: [PATCH] Don't link to fmt library. We use spdlog's embedded headers
+
+---
+ cmake/Modules/FindSpdlog_EP.cmake | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/cmake/Modules/FindSpdlog_EP.cmake b/cmake/Modules/FindSpdlog_EP.cmake
+index cf36d3c80..ff4778ae3 100644
+--- a/cmake/Modules/FindSpdlog_EP.cmake
++++ b/cmake/Modules/FindSpdlog_EP.cmake
+@@ -69,10 +69,11 @@ endif()
+ 
+ if (SPDLOG_FOUND AND NOT TARGET Spdlog::Spdlog)
+   add_library(Spdlog::Spdlog INTERFACE IMPORTED)
+-  find_package(fmt QUIET)
+-  if (${fmt_FOUND})
+-    target_link_libraries(Spdlog::Spdlog INTERFACE fmt::fmt)
+-  endif()
++# Spdlog comes with pre-bundled fmt (its headers) and it is what we use.
++#  find_package(fmt QUIET)
++#  if (${fmt_FOUND})
++#    target_link_libraries(Spdlog::Spdlog INTERFACE fmt::fmt)
++#  endif()
+   set_target_properties(Spdlog::Spdlog PROPERTIES
+     INTERFACE_INCLUDE_DIRECTORIES "${SPDLOG_INCLUDE_DIR}"
+   )
+-- 
+2.40.1
+
