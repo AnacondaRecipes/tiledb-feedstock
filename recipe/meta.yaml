@@ -8,9 +8,11 @@ package:
 source:
   url: https://github.com/TileDB-Inc/{{ name }}/archive/{{ version }}.tar.gz
   sha256: ca65e01788e7149bcdef9aeab9b1449169da3e538eec6200064b06603747db1b
+  patches:
+  - 0002-Don-t-link-to-fmt-library.-We-use-spdlog-s-embedded-.patch
 
 build:
-  number: 2
+  number: 3
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
@@ -24,18 +26,21 @@ requirements:
     - sed   # [not win]
     - gawk  # [not win]
     - cmake <=3.21
-    - patch  # [not win]
     - pkg-config  # [not win]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
+    - patch  # [not win]
+    - m2-patch  # [win]
   host:
-    - zlib
-    - bzip2
-    - zstd
-    - lz4-c
-    - curl  # [not win]
-    - libcurl  # [not win]
-    - openssl  # [not win]
+    - zlib {{ zlib }}
+    - bzip2 {{ bzip2 }}
+    - zstd {{ zstd }}
+    - lz4-c 1.9.4
+    - curl 7.88.1 # [not win]
+    - libcurl 7.88.1  # [not win]
+    - openssl  {{ openssl }}  # [not win]
+  run:
+    - openssl 3.*
 
 test:
   #  downstreams:
@@ -52,7 +57,7 @@ test:
     - if exist %PREFIX%\\Library\\bin\\tiledb.dll (exit 0) else (exit 1)  # [win]
 
 about:
-  home: https://tiledb.io
+  home: https://tiledb.com
   license: MIT
   license_family: MIT
   license_file: LICENSE
@@ -62,7 +67,7 @@ about:
     a novel on-disk format that can effectively store dense and sparse array data with
     support for fast updates and reads. It features excellent compression, and an efficient
     parallel I/O system with high scalability.
-  doc_url: https://docs.tiledb.io
+  doc_url: https://docs.tiledb.com
   dev_url: https://github.com/TileDB-Inc/TileDB
 
 extra:
