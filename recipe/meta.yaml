@@ -1,5 +1,5 @@
 {% set name = "TileDB" %}
-{% set version = "2.3.3" %}
+{% set version = "2.26.2" %}
 
 package:
   name: tiledb
@@ -7,9 +7,9 @@ package:
 
 source:
   url: https://github.com/TileDB-Inc/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: ca65e01788e7149bcdef9aeab9b1449169da3e538eec6200064b06603747db1b
+  sha256: 255218aebd3ef5af4b8deb3be58f877fda335d5abc1c097a33f6741bf259a68d
   patches:
-  - 0002-Don-t-link-to-fmt-library.-We-use-spdlog-s-embedded-.patch
+  #- 0002-Don-t-link-to-fmt-library.-We-use-spdlog-s-embedded-.patch
 
 build:
   number: 3
@@ -19,26 +19,49 @@ build:
   skip: true  # [win and vc<14]
   missing_dso_whitelist:  # [linux and s390x]
     - $RPATH/ld64.so.1    # [linux and s390x]
+  script_env:
+    # "Environment variable VCPKG_FORCE_SYSTEM_BINARIES must be set on
+    # arm, s390x, ppc64le and riscv platforms."
+    - VCPKG_FORCE_SYSTEM_BINARIES=1
+  overlinking_ignore_patterns:
+    # complains about libfmt.so
+    - "lib/libtiledb.*"
+
 requirements:
   build:
-    - make  # [not win]
-    - git   # [not win]
-    - sed   # [not win]
-    - gawk  # [not win]
-    - cmake <=3.21
-    - pkg-config  # [not win]
+    - make                   # [not win]
+    - git                    # [not win]
+    - sed                    # [not win]
+    - gawk                   # [not win]
+    - cmake                  # <=3.21
+    - pkg-config             # [not win]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - patch  # [not win]
-    - m2-patch  # [win]
+    - patch                  # [not win]
+    - m2-patch               # [win]
   host:
     - zlib {{ zlib }}
     - bzip2 {{ bzip2 }}
     - zstd {{ zstd }}
-    - lz4-c 1.9.4
-    - curl 7.88.1 # [not win]
-    - libcurl 7.88.1  # [not win]
-    - openssl  {{ openssl }}  # [not win]
+    - lz4-c
+    - curl                   # [not win]
+    - libcurl                # [not win]
+    - openssl  {{ openssl }} # [not win]
+    - spdlog
+    - libwebp-base
+    # precise version of capnproto required for tiledb >=2.18.0
+    #- capnproto ==1.0.1
+    #- libmagic
+    # s3 required for tiledb-py
+    #- aws-sdk-cpp  # 1.10.55 missing SNOW, EXPRESS_ONEZONE, etc.
+    #- azure-storage-blob
+    #- azure-identity  # azure-identity-cpp?
+    # vcpkg requires curl zip unzip tar
+    - zip
+    - unzip
+    - ninja
+    # for TILEDB_AZURE
+    - libxml2
   run:
     - openssl 3.*
 
