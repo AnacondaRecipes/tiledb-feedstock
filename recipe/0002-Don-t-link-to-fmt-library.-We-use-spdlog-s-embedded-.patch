@@ -1,32 +1,44 @@
-From f9733cf7f72f3997566679f37641a3240392e05f Mon Sep 17 00:00:00 2001
-From: Jean-Christophe Morin <jcmorin@anaconda.com>
-Date: Thu, 1 Jun 2023 17:51:51 -0400
-Subject: [PATCH] Don't link to fmt library. We use spdlog's embedded headers
-
----
- cmake/Modules/FindSpdlog_EP.cmake | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
 diff --git a/cmake/Modules/FindSpdlog_EP.cmake b/cmake/Modules/FindSpdlog_EP.cmake
-index cf36d3c80..ff4778ae3 100644
+index e07c646ff..e7fc56310 100644
 --- a/cmake/Modules/FindSpdlog_EP.cmake
 +++ b/cmake/Modules/FindSpdlog_EP.cmake
-@@ -69,10 +69,11 @@ endif()
+@@ -106,29 +106,14 @@ if (NOT SPDLOG_FOUND)
+   endif()
+ endif()
  
- if (SPDLOG_FOUND AND NOT TARGET Spdlog::Spdlog)
-   add_library(Spdlog::Spdlog INTERFACE IMPORTED)
+-if (spdlog_FOUND AND NOT TARGET spdlog::spdlog)
+-  add_library(spdlog::spdlog INTERFACE IMPORTED)
 -  find_package(fmt QUIET)
 -  if (${fmt_FOUND})
--    target_link_libraries(Spdlog::Spdlog INTERFACE fmt::fmt)
+-    target_link_libraries(spdlog::spdlog INTERFACE fmt::fmt)
 -  endif()
+-  set_target_properties(spdlog::spdlog PROPERTIES
+-          INTERFACE_INCLUDE_DIRECTORIES "${SPDLOG_INCLUDE_DIR}"
+-          )
+-  # If the target is defined we need to handle external fmt build types
+-elseif(TARGET spdlog::spdlog)
+-  if (SPDLOG_FMT_EXTERNAL)
+-    # Since we are using header only we need to define this
+-    add_definitions("-DSPDLOG_FMT_EXTERNAL=1")
+-    find_package(fmt REQUIRED)
+-    if (${fmt_FOUND})
+-      target_link_libraries(spdlog::spdlog INTERFACE fmt::fmt)
+-    endif()
+-  endif()
+-endif()
+-
+-
+-# If we built a static EP, install it if required.
+-if (TILEDB_SPDLOG_EP_BUILT AND TILEDB_INSTALL_STATIC_DEPS)
+-  install_target_libs(spdlog::spdlog)
++if (SPDLOG_FOUND AND NOT TARGET Spdlog::Spdlog)
++  add_library(Spdlog::Spdlog INTERFACE IMPORTED)
 +# Spdlog comes with pre-bundled fmt (its headers) and it is what we use.
 +#  find_package(fmt QUIET)
 +#  if (${fmt_FOUND})
 +#    target_link_libraries(Spdlog::Spdlog INTERFACE fmt::fmt)
 +#  endif()
-   set_target_properties(Spdlog::Spdlog PROPERTIES
-     INTERFACE_INCLUDE_DIRECTORIES "${SPDLOG_INCLUDE_DIR}"
-   )
--- 
-2.40.1
-
++  set_target_properties(Spdlog::Spdlog PROPERTIES
++    INTERFACE_INCLUDE_DIRECTORIES "${SPDLOG_INCLUDE_DIR}"
++  )
+ endif()
