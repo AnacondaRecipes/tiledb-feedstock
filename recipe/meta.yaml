@@ -22,7 +22,7 @@ build:
   script_env:
     # "Environment variable VCPKG_FORCE_SYSTEM_BINARIES must be set on
     # arm, s390x, ppc64le and riscv platforms."
-    - VCPKG_FORCE_SYSTEM_BINARIES=1
+    - VCPKG_FORCE_SYSTEM_BINARIES=1  # [ arm64 or aarch64 or s390x or ppc64le]
   overlinking_ignore_patterns:
     # complains about libfmt.so
     - "lib/libtiledb.*"
@@ -44,22 +44,16 @@ requirements:
     - bzip2 {{ bzip2 }}
     - zstd {{ zstd }}
     - lz4-c
-    - curl                   # [not win]
-    - libcurl                # [not win]
+    - curl
+    - libcurl
     - openssl  {{ openssl }} # [not win]
     - spdlog
     - libwebp-base
-    # precise version of capnproto required for tiledb >=2.18.0
-    #- capnproto ==1.0.1
-    #- libmagic
-    # s3 required for tiledb-py
-    #- aws-sdk-cpp  # 1.10.55 missing SNOW, EXPRESS_ONEZONE, etc.
-    #- azure-storage-blob
-    #- azure-identity  # azure-identity-cpp?
     # vcpkg requires curl zip unzip tar
-    - zip
-    - unzip
+    - zip                    # [not win]
+    - unzip                  # [not win]
     - ninja
+    - git                    # [win]
     # for TILEDB_AZURE
     - libxml2
   run:
