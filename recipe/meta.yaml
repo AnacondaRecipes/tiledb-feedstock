@@ -33,7 +33,7 @@ requirements:
     - git                    # [not win]
     - sed                    # [not win]
     - gawk                   # [not win]
-    - cmake                  # <=3.21
+    - cmake                  # >=3.21
     - pkg-config             # [not win]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
