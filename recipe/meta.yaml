@@ -57,8 +57,8 @@ requirements:
     # for TILEDB_AZURE
     - libxml2
   run:
-    - openssl 3.*
     - fmt  # [win]
+    - openssl 3.*
 
 test:
   #  downstreams:

@@ -49,6 +49,25 @@ if [[ $target_platform == linux-aarch64  ]]; then
   export VCPKG_TARGET_TRIPLET="arm64-linux"
 fi
 
+# For snowflake build only, disabling all the ports:
+# Azure, S3 (AWS) and WebP
+# As they don't require them.
+# TODO: Azure and AWS are supported currently on main in previous version.
+# We should follow up on this package to update it properly and upload to defaults.
+
+# Changes required to build with ports:
+# - TILEDB_AZURE, TILEDB_S3, and optionally TILEDB_WEBP set to ON (WebP currently not supported, as it wasn't back then)
+# - TILEDB_DISABLE_AUTO_VCPKG=ON to disable vcpkg download of dependencies
+# I've been able to find following required packages:
+# - azure-core-cpp
+# - azure-identity-cpp
+# - azure-storage-blobs-cpp
+# - aws-sdk-cpp >=1.11.300 # or >=.2xx, when they introduced generated/src/aws-cpp-sdk-s3/include/aws/s3/model/StorageClass.h with SNOW and EXPRESS_ONEZONE StorageClass values, best to take the commit from vcpkg
+# - capnproto 1.0.1 # hard pinned in cpp code
+# - libmagic
+# Then for azure-storage-blobs-cpp we need azure-storage-core-cpp
+# and for aws-sdk-cpp a chain of aws-c-* dependencies
+
 mkdir build && cd build
 cmake ${CMAKE_ARGS} \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
