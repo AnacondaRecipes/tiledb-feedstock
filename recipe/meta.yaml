@@ -8,8 +8,6 @@ package:
 source:
   url: https://github.com/TileDB-Inc/{{ name }}/archive/{{ version }}.tar.gz
   sha256: 255218aebd3ef5af4b8deb3be58f877fda335d5abc1c097a33f6741bf259a68d
-  patches:
-  #- 0002-Don-t-link-to-fmt-library.-We-use-spdlog-s-embedded-.patch
 
 build:
   number: 3
@@ -37,8 +35,6 @@ requirements:
     - pkg-config             # [not win]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-    - patch                  # [not win]
-    - m2-patch               # [win]
   host:
     - zlib {{ zlib }}
     - bzip2 {{ bzip2 }}
@@ -46,16 +42,13 @@ requirements:
     - lz4-c
     - curl
     - libcurl
-    - openssl  {{ openssl }} # [not win]
+    - openssl {{ openssl }}
     - spdlog
     - libwebp-base
     # vcpkg requires curl zip unzip tar
     - zip                    # [not win]
     - unzip                  # [not win]
     - ninja
-    - git                    # [win]
-    # for TILEDB_AZURE
-    - libxml2
   run:
     - fmt  # [win]
     - openssl 3.*
