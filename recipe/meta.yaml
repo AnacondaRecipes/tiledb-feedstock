@@ -51,7 +51,7 @@ requirements:
     # - unzip                  # [not win]
     # - ninja
     - capnproto 1.0.1
-    - libmagic
+    - libmagic  # [not win]
   run:
     - fmt  # [win]
     - openssl 3.*
