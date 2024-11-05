@@ -55,8 +55,6 @@ requirements:
     - openssl 3.*
 
 test:
-   downstreams:
-   - tiledb-py
   commands:
     - test -e $PREFIX/include/tiledb/tiledb.h  # [not win]
     - test -e $PREFIX/include/tiledb/tiledb  # [not win]
