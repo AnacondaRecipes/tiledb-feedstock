@@ -55,6 +55,7 @@ requirements:
   run:
     - fmt  # [win]
     - openssl 3.*
+    - ninja  # [win]
 
 test:
   #  downstreams:
