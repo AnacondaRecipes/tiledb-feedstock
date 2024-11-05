@@ -9,7 +9,7 @@ pushd "%SRC_DIR%"\build
 REM Ideally, we'd disable vcpkg as it's done in build.sh
 REM but tiledb is using libmagic (aka darwin file command) on windows, with some patches that make it possible...
 
-cmake -G Ninja %CMAKE_ARGS% ^
+cmake -G "NMake Makefiles" %CMAKE_ARGS% ^
       -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
       -DCMAKE_BUILD_TYPE=Release ^
       -DTILEDB_WERROR=OFF ^
