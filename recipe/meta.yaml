@@ -41,22 +41,15 @@ requirements:
     - bzip2 {{ bzip2 }}
     - zstd {{ zstd }}
     - lz4-c
-    # - curl
     - libcurl
     - openssl {{ openssl }}
     - spdlog
-    # - libwebp-base
-    # # vcpkg requires curl zip unzip tar
-    # - zip                    # [not win]
-    # - unzip                  # [not win]
-    - ninja  # [win]
     - capnproto 1.0.1
     - libmagic  # [not win]
     - git  # [win]
   run:
     - fmt  # [win]
     - openssl 3.*
-    - ninja  # [win]
 
 test:
   #  downstreams:
