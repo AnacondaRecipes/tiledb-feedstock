@@ -49,9 +49,10 @@ requirements:
     # # vcpkg requires curl zip unzip tar
     # - zip                    # [not win]
     # - unzip                  # [not win]
-    # - ninja
+    - ninja  # [win]
     - capnproto 1.0.1
     - libmagic  # [not win]
+    - git  # [win]
   run:
     - fmt  # [win]
     - openssl 3.*
