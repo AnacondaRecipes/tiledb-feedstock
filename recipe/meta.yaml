@@ -46,6 +46,9 @@ requirements:
     - spdlog
     - capnproto 1.0.1
     - libmagic  # [not win]
+    # Git is required for vcpkg
+    # Ideally, we'd unvendor vcpkg as mentioned in build.bat
+    # But that would require building libmagic (aka file) on windows
     - git  # [win]
   run:
     - fmt  # [win]
@@ -85,3 +88,5 @@ extra:
     - shelnutt2
     - ihnorton
     - nguyenv
+  skip-lints:
+    - no_git_on_windows
