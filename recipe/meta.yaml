@@ -24,7 +24,7 @@ build:
 
 requirements:
   build:
-    - ninja
+    - ninja-base
     - sed                    # [not win]
     - gawk                   # [not win]
     - cmake                  # >=3.21
