@@ -21,9 +21,6 @@ build:
     # "Environment variable VCPKG_FORCE_SYSTEM_BINARIES must be set on
     # arm, s390x, ppc64le and riscv platforms."
     - VCPKG_FORCE_SYSTEM_BINARIES=1  # [ arm64 or aarch64 or s390x or ppc64le]
-  overlinking_ignore_patterns:
-    # complains about libfmt.so
-    - "lib/libtiledb.*"
 
 requirements:
   build:
@@ -49,7 +46,8 @@ requirements:
     # But that would require building libmagic (aka file) on windows
     - git  # [win]
   run:
-    - fmt  # [win]
+    # our version of spdlog doesn't provide fmt directly (USE_EXTERNAL_FMT is set to ON), and tiledb requires it
+    - fmt
     - openssl 3.*
 
 test:
