@@ -27,9 +27,7 @@ build:
 
 requirements:
   build:
-    - make                   # [not win]
-    - ninja                  # [win]
-    - git                    # [not win]
+    - ninja
     - sed                    # [not win]
     - gawk                   # [not win]
     - cmake                  # >=3.21

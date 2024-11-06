@@ -69,7 +69,7 @@ fi
 # and for aws-sdk-cpp a chain of aws-c-* dependencies
 
 mkdir build && cd build
-cmake ${CMAKE_ARGS} \
+cmake -G Ninja ${CMAKE_ARGS} \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_BUILD_TYPE=Release \
   -DTILEDB_WERROR=OFF \
@@ -85,5 +85,4 @@ cmake ${CMAKE_ARGS} \
   -DTILEDB_DISABLE_AUTO_VCPKG=ON \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET} \
   ..
-make -j $(( ${CPU_COUNT} / 2 + 1 ))
-make -C tiledb install
+cmake --build . -j $(( ${CPU_COUNT} / 2 + 1 )) --target install
