@@ -27,6 +27,6 @@ cmake -G Ninja %CMAKE_ARGS% ^
       ..
 if errorlevel 1 exit 1
 
-cmake --build . -j --target install
+cmake --build . -j %CPU_COUNT% --target install
 if errorlevel 1 exit 1
 popd
