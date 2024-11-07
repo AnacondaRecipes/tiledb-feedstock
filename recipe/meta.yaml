@@ -36,7 +36,7 @@ requirements:
     - bzip2 {{ bzip2 }}
     - zstd {{ zstd }}
     - lz4-c
-    - libcurl
+    - libcurl 8.9.1
     - openssl {{ openssl }}
     - spdlog
     - capnproto 1.0.1
