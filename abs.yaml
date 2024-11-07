@@ -1,3 +1,2 @@
-channels:
-  - https://staging.continuum.io/prefect/fs/libwebp-base-feedstock/pr7/53361c4
-  - https://staging.continuum.io/prefect/fs/capnproto-feedstock/pr5/5daf52d
+upload_channels:
+  - sfe1ed40
