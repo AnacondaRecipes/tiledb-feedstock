@@ -55,12 +55,14 @@ test:
     - test -e $PREFIX/include/tiledb/tiledb.h  # [not win]
     - test -e $PREFIX/include/tiledb/tiledb  # [not win]
     - test -e $PREFIX/lib/libtiledb$SHLIB_EXT  # [not win]
+    - test -e $PREFIX/lib/pkgconfig/tiledb.pc  # [not win]
 
     - if exist %LIBRARY_INC%\\tiledb\\tiledb (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_INC%\\tiledb\\tiledb.h (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_LIB%\\tiledb.lib (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_LIB%\\cmake\\TileDB\\TileDBConfig.cmake (exit 0) else (exit 1)  # [win]
     - if exist %PREFIX%\\Library\\bin\\tiledb.dll (exit 0) else (exit 1)  # [win]
+    - if exist %PREFIX%\\Library\\lib\\pkgconfig\\tiledb.pc (exit 0) else (exit 1)  # [win]
 
 about:
   home: https://tiledb.com
