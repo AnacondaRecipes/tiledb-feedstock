@@ -1,0 +1,12 @@
+diff --git a/tiledb/sm/c_api/tiledb.h b/tiledb/sm/c_api/tiledb.h
+index a19e14d9c..67f1570db 100644
+--- a/tiledb/sm/c_api/tiledb.h
++++ b/tiledb/sm/c_api/tiledb.h
+@@ -41,6 +41,7 @@
+ 
+ #include <stdint.h>
+ #include <stdio.h>
++#include <stdexcept.h>
+ 
+ /* ********************************* */
+ /*               MACROS              */

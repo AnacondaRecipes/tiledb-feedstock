@@ -10,9 +10,10 @@ source:
   sha256: ca65e01788e7149bcdef9aeab9b1449169da3e538eec6200064b06603747db1b
   patches:
   - 0002-Don-t-link-to-fmt-library.-We-use-spdlog-s-embedded-.patch
+  - 0003-add-missing-header.patch  # [win]
 
 build:
-  number: 3
+  number: 4
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
