@@ -40,7 +40,7 @@ requirements:
     - openssl {{ openssl }}
     - spdlog 1.11.0
     - capnproto 1.0.1
-    - libmagic 5.59  # [not win]
+    - libmagic 5.39  # [not win]
     # Git is required for vcpkg
     # Ideally, we'd unvendor vcpkg as mentioned in build.bat
     # But that would require building libmagic (aka file) on windows
