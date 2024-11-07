@@ -35,12 +35,12 @@ requirements:
     - zlib {{ zlib }}
     - bzip2 {{ bzip2 }}
     - zstd {{ zstd }}
-    - lz4-c
+    - lz4-c 1.9.4
     - libcurl 8.9.1
     - openssl {{ openssl }}
-    - spdlog
+    - spdlog 1.11.0
     - capnproto 1.0.1
-    - libmagic  # [not win]
+    - libmagic 5.59  # [not win]
     # Git is required for vcpkg
     # Ideally, we'd unvendor vcpkg as mentioned in build.bat
     # But that would require building libmagic (aka file) on windows
