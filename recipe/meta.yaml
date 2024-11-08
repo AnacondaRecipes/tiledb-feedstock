@@ -42,7 +42,7 @@ requirements:
     - libcurl 8.9.1
     - openssl {{ openssl }}
     - spdlog 1.11.0
-    - capnproto 1.0.1
+    - capnproto 1.0.1.1  # originally 1.0.1, but 1.0.1.1 fixes CVE for capnproto
     - libmagic 5.39  # [not win]
   run:
     # our version of spdlog doesn't provide fmt directly (USE_EXTERNAL_FMT is set to ON), and tiledb requires it
