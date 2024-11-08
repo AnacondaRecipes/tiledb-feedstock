@@ -41,10 +41,6 @@ requirements:
     - spdlog 1.11.0
     - capnproto 1.0.1
     - libmagic 5.39  # [not win]
-    # Git is required for vcpkg
-    # Ideally, we'd unvendor vcpkg as mentioned in build.bat
-    # But that would require building libmagic (aka file) on windows
-    - git  # [win]
   run:
     # our version of spdlog doesn't provide fmt directly (USE_EXTERNAL_FMT is set to ON), and tiledb requires it
     - fmt
@@ -84,5 +80,3 @@ extra:
     - shelnutt2
     - ihnorton
     - nguyenv
-  skip-lints:
-    - no_git_on_windows
