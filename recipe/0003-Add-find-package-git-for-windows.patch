@@ -1,0 +1,15 @@
+diff --git a/cmake/Options/TileDBToolchain.cmake b/cmake/Options/TileDBToolchain.cmake
+index f9cd9d186..136800b72 100644
+--- a/cmake/Options/TileDBToolchain.cmake
++++ b/cmake/Options/TileDBToolchain.cmake
+@@ -38,6 +38,10 @@ if (NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+         # To help with resolving conflicts, when you update the commit, also update its date.
+         set(VCPKG_COMMIT_STRING 72010900b7cee36cea77aebb97695095c9358eaf) # 2023-12-05
+         message("Vcpkg commit string used: ${VCPKG_COMMIT_STRING}")
++        find_package(Git)
++        if(NOT Git_FOUND)
++            message("GIT NOT FOUND")
++        endif()
+         include(FetchContent)
+         FetchContent_Declare(
+             vcpkg
