@@ -27,7 +27,7 @@ requirements:
     - ninja-base
     - sed  # [not win]
     - gawk  # [not win]
-    - cmake >=3.27.1
+    - cmake
     - pkg-config  # [not win]
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
