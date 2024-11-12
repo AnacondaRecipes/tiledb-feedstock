@@ -26,9 +26,8 @@ cmake -G Ninja %CMAKE_ARGS% ^
       -DVCPKG_CMAKE_CONFIGURE_OPTIONS=-DCMAKE_FIND_DEBUG_MODE=TRUE ^
       ..
 echo MY_DEBUG_START
-echo %cd%
-echo %BUILD_PREFIX%\vcpkg-bootstrap.log
-type %BUILD_PREFIX%\vcpkg-bootstrap.log
+if exist vcpkg-bootstrap.log (echo GOOD) else (echo BAD)
+type vcpkg-bootstrap.log
 echo MY_DEBUG_END
 if errorlevel 1 exit 1
 
