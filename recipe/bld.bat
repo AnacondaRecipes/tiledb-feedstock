@@ -12,6 +12,7 @@ REM but tiledb is using libmagic (aka darwin file command) on windows, with some
 cmake -G Ninja %CMAKE_ARGS% ^
       -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
       -DCMAKE_BUILD_TYPE=Release ^
+      -DTILEDB_CMAKE_IDE=ON ^
       -DTILEDB_WERROR=OFF ^
       -DTILEDB_TESTS=OFF ^
       -DTILEDB_S3=OFF ^
