@@ -14,7 +14,9 @@ build:
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
-  skip: true  # [win and vc<14]
+  # Skipping this build for windows as it's not necessary for snowflake
+  # For defaults build this needs to be enabled
+  skip: true  # [win]
   missing_dso_whitelist:  # [linux and s390x]
     - $RPATH/ld64.so.1    # [linux and s390x]
   script_env:
@@ -41,7 +43,6 @@ requirements:
     - spdlog 1.11.0
     - capnproto 1.0.1.1  # originally 1.0.1, but 1.0.1.1 fixes CVE for capnproto
     - libmagic 5.39  # [not win]
-    - 7za  # [win]
   run:
     # our version of spdlog doesn't provide fmt directly (USE_EXTERNAL_FMT is set to ON), and tiledb requires it
     - fmt
@@ -53,7 +54,7 @@ test:
     - test -e $PREFIX/include/tiledb/tiledb  # [not win]
     - test -e $PREFIX/lib/libtiledb$SHLIB_EXT  # [not win]
     - test -e $PREFIX/lib/pkgconfig/tiledb.pc  # [not win]
-
+    # While this build is skipping windows, I'm leaving those for future reference
     - if exist %LIBRARY_INC%\\tiledb\\tiledb (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_INC%\\tiledb\\tiledb.h (exit 0) else (exit 1)  # [win]
     - if exist %LIBRARY_LIB%\\tiledb.lib (exit 0) else (exit 1)  # [win]
