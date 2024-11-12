@@ -25,7 +25,9 @@ cmake -G Ninja %CMAKE_ARGS% ^
       -DVCPKG_TARGET_TRIPLET=x64-windows ^
       -DVCPKG_CMAKE_CONFIGURE_OPTIONS=-DCMAKE_FIND_DEBUG_MODE=TRUE ^
       ..
+echo MY_DEBUG_START
 type %BUILD_PREFIX%\vcpkg-bootstrap.log
+echo MY_DEBUG_END
 if errorlevel 1 exit 1
 
 cmake --build . -j %CPU_COUNT% --target install
