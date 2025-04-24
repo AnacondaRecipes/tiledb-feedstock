@@ -2,7 +2,7 @@
 {% set version = "2.26.2" %}
 
 package:
-  name: tiledb
+  name: {{ name | lower }}
   version: {{ version }}
 
 source:
@@ -10,15 +10,10 @@ source:
   sha256: 255218aebd3ef5af4b8deb3be58f877fda335d5abc1c097a33f6741bf259a68d
 
 build:
-  number: 3
+  number: 4
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
-  # Skipping this build for windows as it's not necessary for snowflake
-  # For defaults build this needs to be enabled
-  skip: true  # [win]
-  missing_dso_whitelist:  # [linux and s390x]
-    - $RPATH/ld64.so.1    # [linux and s390x]
   script_env:
     # "Environment variable VCPKG_FORCE_SYSTEM_BINARIES must be set on
     # arm, s390x, ppc64le and riscv platforms."
@@ -37,30 +32,39 @@ requirements:
     - zlib {{ zlib }}
     - bzip2 {{ bzip2 }}
     - zstd {{ zstd }}
-    - lz4-c 1.9.4
-    - libcurl 8.9.1
+    - libcurl {{ libcurl }}
     - openssl {{ openssl }}
     - spdlog 1.11.0
-    - capnproto 1.0.1.1  # originally 1.0.1, but 1.0.1.1 fixes CVE for capnproto
-    - libmagic 5.39  # [not win]
-  run:
-    # our version of spdlog doesn't provide fmt directly (USE_EXTERNAL_FMT is set to ON), and tiledb requires it
-    - fmt
-    - openssl 3.*
+    - capnproto 1.1.0
+    - libmagic 5.46
+    - fmt 9.1
+    - lz4-c 1.9
+    - aws-sdk-cpp 1.11.528
+    - aws-c-common 0.11
+    - aws-crt-cpp 0.31
+    - azure-core-cpp 1.14
+    - azure-identity-cpp 1.10
+    - azure-storage-blobs-cpp 12.13
+    - libwebp-base {{ libwebp }}
 
 test:
+  requires:
+    - {{ compiler('cxx') }}  # [unix]
+    - cmake                  # [unix]
+    - make                   # [unix]
   commands:
     - test -e $PREFIX/include/tiledb/tiledb.h  # [not win]
-    - test -e $PREFIX/include/tiledb/tiledb  # [not win]
+    - test -e $PREFIX/include/tiledb/tiledb    # [not win]
     - test -e $PREFIX/lib/libtiledb$SHLIB_EXT  # [not win]
     - test -e $PREFIX/lib/pkgconfig/tiledb.pc  # [not win]
-    # While this build is skipping windows, I'm leaving those for future reference
-    - if exist %LIBRARY_INC%\\tiledb\\tiledb (exit 0) else (exit 1)  # [win]
+
+    - if exist %LIBRARY_INC%\\tiledb\\tiledb (exit 0) else (exit 1)    # [win]
     - if exist %LIBRARY_INC%\\tiledb\\tiledb.h (exit 0) else (exit 1)  # [win]
-    - if exist %LIBRARY_LIB%\\tiledb.lib (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_LIB%\\tiledb.lib (exit 0) else (exit 1)        # [win]
+    - if exist %LIBRARY_BIN%\\tiledb.dll (exit 0) else (exit 1)        # [win]
+
     - if exist %LIBRARY_LIB%\\cmake\\TileDB\\TileDBConfig.cmake (exit 0) else (exit 1)  # [win]
-    - if exist %PREFIX%\\Library\\bin\\tiledb.dll (exit 0) else (exit 1)  # [win]
-    - if exist %PREFIX%\\Library\\lib\\pkgconfig\\tiledb.pc (exit 0) else (exit 1)  # [win]
+    - if exist %LIBRARY_LIB%\\pkgconfig\\tiledb.pc (exit 0) else (exit 1)               # [win]
 
 about:
   home: https://tiledb.com
@@ -73,10 +77,13 @@ about:
     a novel on-disk format that can effectively store dense and sparse array data with
     support for fast updates and reads. It features excellent compression, and an efficient
     parallel I/O system with high scalability.
-  doc_url: https://docs.tiledb.com
+  doc_url: https://cloud.tiledb.com/academy/home/
   dev_url: https://github.com/TileDB-Inc/TileDB
 
 extra:
+  skip-lints:
+    - has_run_test_and_commands
+    - invalid_url  # https://cloud.tiledb.com/academy/home/ : Not reachable: 405
   recipe-maintainers:
     - stavrospapadopoulos
     - shelnutt2
