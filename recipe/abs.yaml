@@ -1,2 +1,3 @@
 channels:
   - https://staging.continuum.io/prefect/fs/aws-crt-cpp-feedstock/pr3/5ecd966
+  - https://staging.continuum.io/prefect/fs/aws-sdk-cpp-feedstock/pr137/bd1e692
