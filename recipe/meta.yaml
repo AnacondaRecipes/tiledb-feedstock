@@ -35,7 +35,7 @@ requirements:
     - zstd {{ zstd }}
     - libcurl {{ libcurl }}
     - openssl {{ openssl }}
-    - spdlog 1.11.0
+    - spdlog 1.15.3
     - capnproto 1.1.0
     - libmagic 5.46
     - fmt {{ fmt }}
