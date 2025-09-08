@@ -10,14 +10,14 @@ source:
   sha256: 255218aebd3ef5af4b8deb3be58f877fda335d5abc1c097a33f6741bf259a68d
 
 build:
-  number: 6
+  number: 7
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
   script_env:
     # "Environment variable VCPKG_FORCE_SYSTEM_BINARIES must be set on
-    # arm, s390x, ppc64le and riscv platforms."
-    - VCPKG_FORCE_SYSTEM_BINARIES=1  # [ arm64 or aarch64 or s390x or ppc64le]
+    # arm, ppc64le and riscv platforms."
+    - VCPKG_FORCE_SYSTEM_BINARIES=1  # [ arm64 or aarch64 or ppc64le]
 
 requirements:
   build:
@@ -38,7 +38,7 @@ requirements:
     - spdlog 1.11.0
     - capnproto 1.1.0
     - libmagic 5.46
-    - fmt 9.1
+    - fmt {{ fmt }}
     - lz4-c 1.9
     - aws-sdk-cpp 1.11.638
     - aws-c-common 0.12.4
