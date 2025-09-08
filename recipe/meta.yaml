@@ -16,8 +16,8 @@ build:
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
   script_env:
     # "Environment variable VCPKG_FORCE_SYSTEM_BINARIES must be set on
-    # arm, ppc64le and riscv platforms."
-    - VCPKG_FORCE_SYSTEM_BINARIES=1  # [ arm64 or aarch64 or ppc64le]
+    # arm and riscv platforms."
+    - VCPKG_FORCE_SYSTEM_BINARIES=1  # [ arm64 or aarch64 ]
 
 requirements:
   build:
