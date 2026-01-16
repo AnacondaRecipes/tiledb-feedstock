@@ -1,4 +1,15 @@
 #!/bin/bash
 
-args="${@##-Werror*}"
-$NN_CXX_ORIG $args
+# Filter out -fexperimental-library and -Werror* flags
+args=()
+for arg in "$@"; do
+    case "$arg" in
+        -Werror*|-fexperimental-library)
+            # Skip these arguments, they cause errors
+            ;;
+        *)
+            args+=("$arg")
+            ;;
+    esac
+done
+$NN_CXX_ORIG "${args[@]}"
