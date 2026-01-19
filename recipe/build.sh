@@ -32,14 +32,8 @@ fi
 if [[ $target_platform == osx-arm64  ]]; then
   export VCPKG_TARGET_TRIPLET="arm64-osx"
 fi
-if [[ $target_platform == osx-64  ]]; then
-  export VCPKG_TARGET_TRIPLET="x64-osx"
-fi
 if [[ $target_platform == linux-64  ]]; then
   export VCPKG_TARGET_TRIPLET="x64-linux"
-fi
-if [[ $target_platform == linux-ppc64le  ]]; then
-  export VCPKG_TARGET_TRIPLET="ppc64le-linux"
 fi
 if [[ $target_platform == linux-aarch64  ]]; then
   export VCPKG_TARGET_TRIPLET="arm64-linux"
@@ -59,7 +53,7 @@ cmake -G Ninja ${CMAKE_ARGS} \
   -DTILEDB_WERROR=OFF \
   -DTILEDB_TESTS=OFF \
   -DTILEDB_INSTALL_LIBDIR=lib \
-  -DTILEDB_HDFS=ON \
+  -DTILEDB_HDFS=OFF \
   -DTILEDB_SANITIZER=OFF \
   -DCOMPILER_SUPPORTS_AVX2:BOOL=FALSE \
   -DTILEDB_S3=ON \

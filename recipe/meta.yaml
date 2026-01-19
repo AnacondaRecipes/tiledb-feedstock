@@ -1,5 +1,5 @@
 {% set name = "TileDB" %}
-{% set version = "2.26.2" %}
+{% set version = "2.30.0" %}
 
 package:
   name: {{ name | lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/TileDB-Inc/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 255218aebd3ef5af4b8deb3be58f877fda335d5abc1c097a33f6741bf259a68d
+  sha256: c5f94da6de0e0f93925f7ad107bd80fef0615f9b3d111a5bae245f75b1fcc173
 
 build:
-  number: 7
+  number: 0
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
@@ -30,23 +30,27 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
-    - zlib {{ zlib }}
+    - zlib 1.3.1
     - bzip2 {{ bzip2 }}
     - zstd {{ zstd }}
     - libcurl {{ libcurl }}
     - openssl {{ openssl }}
-    - spdlog 1.15.3
+    - spdlog 1.16.0
     - capnproto 1.1.0
     - libmagic 5.46
     - fmt {{ fmt }}
+    - c-blosc2 {{ c_blosc2 }}
     - lz4-c 1.9
-    - aws-sdk-cpp 1.11.638
-    - aws-c-common 0.12.4
-    - aws-crt-cpp 0.34.0
-    - azure-core-cpp 1.14
-    - azure-identity-cpp 1.10
-    - azure-storage-blobs-cpp 12.13
+    - aws-sdk-cpp 1.11.720
+    - aws-c-common 0.12.6
+    - aws-crt-cpp 0.35.4
+    - azure-core-cpp 1.16.1
+    - azure-identity-cpp 1.13.2
+    - azure-storage-common-cpp 12.11
+    - azure-storage-blobs-cpp 12.15
+    - azure-storage-files-datalake-cpp 12.13.0
     - libwebp-base {{ libwebp }}
+    - nlohmann_json 3.11.2 # [win]
 
 test:
   requires:

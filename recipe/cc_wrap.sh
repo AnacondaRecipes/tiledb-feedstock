@@ -1,4 +1,13 @@
 #!/bin/bash
-
-args="${@##-Werror*}"
-$NN_CC_ORIG $args
+args=()
+for arg in "$@"; do
+    case "$arg" in
+        -Werror*|-fexperimental-library)
+            # These arguments provoke errors
+            ;;
+        *)
+            args+=("$arg")
+            ;;
+    esac
+done
+$NN_CC_ORIG "${args[@]}"
