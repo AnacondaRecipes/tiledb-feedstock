@@ -5,22 +5,13 @@ set -exo pipefail
 # which packages have been installed locally
 cp -r "${RECIPE_DIR}/tiledb-patches/." "${SRC_DIR}"
 
-# Use CC/CXX wrappers to disable -Werror
-export NN_CXX_ORIG=$CXX
-export NN_CC_ORIG=$CC
-export CXX="${RECIPE_DIR}/cxx_wrap.sh"
-export CC="${RECIPE_DIR}/cc_wrap.sh"
+# Disable -Werror
+export CFLAGS="${CFLAGS//-Werror/}"
+export CXXFLAGS="${CXXFLAGS//-Werror/}"
 
 # For some weird reason, ar is not picked up on linux-aarch64
 if [ $(uname -s) = "Linux" ] && [ ! -f "${BUILD_PREFIX}/bin/ar" ]; then
     ln -s "${BUILD}-ar" "${BUILD_PREFIX}/bin/ar"
-fi
-
-export CMAKE_OSX_DEPLOYMENT_TARGET=${MACOSX_DEPLOYMENT_TARGET}
-
-if [[ $target_platform =~ osx-arm64 ]]; then
-  CURL_LIBS_APPEND=`$PREFIX/bin/curl-config --libs`
-  export LDFLAGS="${LDFLAGS} ${CURL_LIBS_APPEND}"
 fi
 
 if [[ $target_platform == linux-* ]]; then
@@ -30,6 +21,10 @@ fi
 # Set the vcpkg target triplet otherwise vcpkg can't find the
 # compilers
 if [[ $target_platform == osx-arm64  ]]; then
+  CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
+  export PATH="$PREFIX/include/fmt:$PATH"
+  # Explicit library that holds proper libc++, build process can't figure it out for some reason
+  export LDFLAGS="${LDFLAGS} $(${PREFIX}/bin/curl-config --libs) -L$BUILD_PREFIX/lib"
   export VCPKG_TARGET_TRIPLET="arm64-osx"
 fi
 if [[ $target_platform == linux-64  ]]; then
