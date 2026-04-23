@@ -14,14 +14,11 @@ build:
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
-  script_env:
-    # "Environment variable VCPKG_FORCE_SYSTEM_BINARIES must be set on
-    # arm and riscv platforms."
-    - VCPKG_FORCE_SYSTEM_BINARIES=1  # [ arm64 or aarch64 ]
 
 requirements:
   build:
     - ninja-base
+    - git  # [win]
     - sed  # [not win]
     - gawk  # [not win]
     - cmake
@@ -30,25 +27,25 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
   host:
-    - zlib 1.3.1
+    - zlib {{ zlib }}
     - bzip2 {{ bzip2 }}
     - zstd {{ zstd }}
     - libcurl {{ libcurl }}
     - openssl {{ openssl }}
-    - spdlog 1.16.0
-    - capnproto 1.1.0
+    - spdlog {{ spdlog }}
+    - capnproto {{ capnproto }}
     - libmagic 5.46
     - fmt {{ fmt }}
     - c-blosc2 {{ c_blosc2 }}
-    - lz4-c 1.9
-    - aws-sdk-cpp 1.11.720
-    - aws-c-common 0.12.6
-    - aws-crt-cpp 0.35.4
-    - azure-core-cpp 1.16.1
-    - azure-identity-cpp 1.13.2
-    - azure-storage-common-cpp 12.11
-    - azure-storage-blobs-cpp 12.15
-    - azure-storage-files-datalake-cpp 12.13.0
+    - lz4-c {{ lz4_c }}
+    - aws-sdk-cpp {{ aws_sdk_cpp }}
+    - aws-c-common {{ aws_c_common }}
+    - aws-crt-cpp {{ aws_crt_cpp }}
+    - azure-core-cpp {{ azure_core_cpp }}
+    - azure-identity-cpp {{ azure_identity_cpp }}
+    - azure-storage-common-cpp {{ azure_storage_common_cpp }}
+    - azure-storage-blobs-cpp {{ azure_storage_blobs_cpp }}
+    - azure-storage-files-datalake-cpp {{ azure_storage_files_datalake_cpp }}
     - libwebp-base {{ libwebp }}
     - nlohmann_json 3.11.2 # [win]
 
@@ -82,7 +79,7 @@ about:
     a novel on-disk format that can effectively store dense and sparse array data with
     support for fast updates and reads. It features excellent compression, and an efficient
     parallel I/O system with high scalability.
-  doc_url: https://cloud.tiledb.com/academy/home/
+  doc_url: https://cloud.tiledb.com/academy/home
   dev_url: https://github.com/TileDB-Inc/TileDB
 
 extra:

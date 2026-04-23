@@ -1,0 +1,15 @@
+{
+  "name": "azure-core-cpp",
+  "version-string": "system",
+  "features": {
+    "curl": {
+      "description": "provided by conda"
+    },
+    "http": {
+      "description": "provided by conda"
+    },
+    "winhttp": {
+      "description": "provided by conda"
+    }
+  }
+}
