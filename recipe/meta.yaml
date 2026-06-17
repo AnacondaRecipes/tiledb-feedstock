@@ -10,7 +10,7 @@ source:
   sha256: c5f94da6de0e0f93925f7ad107bd80fef0615f9b3d111a5bae245f75b1fcc173
 
 build:
-  number: 0
+  number: 1
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
@@ -45,7 +45,7 @@ requirements:
     - azure-identity-cpp {{ azure_identity_cpp }}
     - azure-storage-common-cpp {{ azure_storage_common_cpp }}
     - azure-storage-blobs-cpp {{ azure_storage_blobs_cpp }}
-    - azure-storage-files-datalake-cpp {{ azure_storage_files_datalake_cpp }}
+    - azure-storage-files-datalake-cpp 12.13.0
     - libwebp-base {{ libwebp }}
     - nlohmann_json 3.11.2 # [win]
 
@@ -69,7 +69,7 @@ test:
     - if exist %LIBRARY_LIB%\\pkgconfig\\tiledb.pc (exit 0) else (exit 1)               # [win]
 
 about:
-  home: https://tiledb.com
+  home: https://www.tiledb.com/
   license: MIT
   license_family: MIT
   license_file: LICENSE
@@ -79,13 +79,12 @@ about:
     a novel on-disk format that can effectively store dense and sparse array data with
     support for fast updates and reads. It features excellent compression, and an efficient
     parallel I/O system with high scalability.
-  doc_url: https://cloud.tiledb.com/academy/home
+  doc_url: https://cloud.tiledb.com/academy/home/
   dev_url: https://github.com/TileDB-Inc/TileDB
 
 extra:
   skip-lints:
-    - has_run_test_and_commands
-    - invalid_url  # https://cloud.tiledb.com/academy/home/ : Not reachable: 405
+    - reachable_url  # https://cloud.tiledb.com/academy/home/ : Not reachable: 405
   recipe-maintainers:
     - stavrospapadopoulos
     - shelnutt2
