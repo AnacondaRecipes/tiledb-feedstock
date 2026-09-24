@@ -31,6 +31,7 @@ cmake -G Ninja %CMAKE_ARGS% ^
       ..
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-cmake --build . -j %CPU_COUNT% --target install
+echo "Building with CPU_COUNT=%CPU_COUNT%"
+cmake --build . -v -j %CPU_COUNT% --target install
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 popd
