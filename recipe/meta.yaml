@@ -22,7 +22,7 @@ requirements:
     - sed  # [not win]
     - gawk  # [not win]
     - cmake
-    - pkg-config
+    - pkg-config  # [not win]
     - {{ stdlib('c') }}
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}

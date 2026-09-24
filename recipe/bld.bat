@@ -14,6 +14,14 @@ if %ERRORLEVEL% neq 0 (
 mkdir "%SRC_DIR%"\build
 pushd "%SRC_DIR%"\build
 
+echo "===== [lz4-diag] searching source tree for lz4 handling ====="
+findstr /s /i /m "lz4" "%SRC_DIR%\cmake\*.cmake" "%SRC_DIR%\cmake\Modules\*.cmake" "%SRC_DIR%\cmake\helpers\*.cmake" 2>nul
+echo "===== [lz4-diag] printing tiledb/CMakeLists.txt around line 725 ====="
+powershell -Command "Get-Content '%SRC_DIR%\tiledb\CMakeLists.txt' | Select-Object -Skip 700 -First 50"
+echo "===== [lz4-diag] printing cmake/helpers/CheckDependentLibraries.cmake if present ====="
+findstr /i "lz4" "%SRC_DIR%\cmake\helpers\CheckDependentLibraries.cmake" 2>nul
+echo "===== [lz4-diag] done ====="
+
 cmake -G Ninja %CMAKE_ARGS% ^
       -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" ^
       -DCMAKE_PREFIX_PATH="%LIBRARY_PREFIX%" ^
