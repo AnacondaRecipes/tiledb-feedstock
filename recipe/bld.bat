@@ -41,6 +41,15 @@ cmake -G Ninja %CMAKE_ARGS% ^
       -DVCPKG_CMAKE_CONFIGURE_OPTIONS=-DCMAKE_FIND_DEBUG_MODE=TRUE ^
       ..
 
+echo "===== [lz4-diag] contents of the lz4 overlay port ====="
+dir /s /b "%SRC_DIR%\system-ports\lz4"
+type "%SRC_DIR%\system-ports\lz4\portfile.cmake" 2>nul
+type "%SRC_DIR%\system-ports\lz4\vcpkg.json" 2>nul
+echo "===== [lz4-diag] generated vcpkg config for lz4, if it exists yet ====="
+dir /s /b "%SRC_DIR%\build\vcpkg_installed\x64-windows\share\lz4" 2>nul
+type "%SRC_DIR%\build\vcpkg_installed\x64-windows\share\lz4\lz4-config.cmake" 2>nul
+echo "===== [lz4-diag] done ====="
+
 echo "cmake configure exited with errorlevel %ERRORLEVEL%"
 if %ERRORLEVEL% neq 0 (
     echo "cmake configure FAILED - see above for CMake output"
