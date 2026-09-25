@@ -17,6 +17,15 @@ dir "%LIBRARY_PREFIX%\lib\lz4*" 2>nul
 dir "%LIBRARY_PREFIX%\include\lz4*" 2>nul
 echo "===== [lz4-diag] done ====="
 
+
+echo "===== [lz4-diag] contents of lz4Targets.cmake ====="
+type "%PREFIX%\Library\lib\cmake\lz4\lz4Targets.cmake"
+echo "===== [lz4-diag] contents of lz4Targets-release.cmake ====="
+type "%PREFIX%\Library\lib\cmake\lz4\lz4Targets-release.cmake"
+echo "===== [lz4-diag] actual lib files (broadened pattern) ====="
+dir "%PREFIX%\Library\lib\*lz4*"
+echo "===== [lz4-diag] done ====="
+
 REM Regenerate the capnp serialization files with the version installed in Conda.
 REM This allows updating capnproto independently of upstream tiledb.
 %PREFIX%\Library\bin\capnp compile -I %PREFIX%\Library\include -oc++:%SRC_DIR%\tiledb\sm\serialization %SRC_DIR%\tiledb\sm\serialization\tiledb-rest.capnp --src-prefix=%SRC_DIR%\tiledb\sm\serialization
