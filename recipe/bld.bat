@@ -6,10 +6,7 @@ xcopy /Y /S /I "%RECIPE_DIR%\tiledb-patches" "%SRC_DIR%"
 REM Regenerate the capnp serialization files with the version installed in Conda.
 REM This allows updating capnproto independently of upstream tiledb.
 %PREFIX%\Library\bin\capnp compile -I %PREFIX%\Library\include -oc++:%SRC_DIR%\tiledb\sm\serialization %SRC_DIR%\tiledb\sm\serialization\tiledb-rest.capnp --src-prefix=%SRC_DIR%\tiledb\sm\serialization
-if %ERRORLEVEL% neq 0 (
-    echo "capnp compile FAILED with errorlevel %ERRORLEVEL%"
-    exit /b %ERRORLEVEL%
-)
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
 mkdir "%SRC_DIR%"\build
 pushd "%SRC_DIR%"\build
@@ -32,21 +29,8 @@ cmake -G Ninja %CMAKE_ARGS% ^
       -DVCPKG_TARGET_TRIPLET=x64-windows ^
       -DVCPKG_CMAKE_CONFIGURE_OPTIONS=-DCMAKE_FIND_DEBUG_MODE=TRUE ^
       ..
-set CONFIGURE_RC=%ERRORLEVEL%
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-echo "cmake configure exited with errorlevel %CONFIGURE_RC%"
-if %CONFIGURE_RC% neq 0 (
-    echo "cmake configure FAILED - see above for CMake output"
-    popd
-    exit /b %CONFIGURE_RC%
-)
-
-echo "Building with CPU_COUNT=%CPU_COUNT%"
-cmake --build . -v -j %CPU_COUNT% --target install
-set BUILD_RC=%ERRORLEVEL%
-echo "cmake --build exited with errorlevel %BUILD_RC%"
-if %BUILD_RC% neq 0 (
-    popd
-    exit /b %BUILD_RC%
-)
+cmake --build . -j %CPU_COUNT% --target install
+if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 popd
