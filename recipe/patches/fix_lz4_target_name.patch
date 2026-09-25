@@ -1,6 +1,17 @@
+diff --git a/cmake/Modules/FindLZ4.cmake b/cmake/Modules/FindLZ4.cmake
+index e6678dd6f..73e72eb95 100644
 --- a/cmake/Modules/FindLZ4.cmake
 +++ b/cmake/Modules/FindLZ4.cmake
-@@ -37,6 +37,8 @@ find_package(lz4 CONFIG)
+@@ -39,9 +39,17 @@ find_package(lz4 CONFIG)
+ # Addendum: While vcpkg has updated to the official CMake build system, Conda has not yet.
+ # Let's keep the lowercase name for maximum compatibility, and once Conda updates, we can
+ # remove this find module and just call find_package(lz4 CONFIG) directly.
++
++# On Windows, the lz4 package uses CMake build which provides the import target name
++# of LZ4::lz4_shared, rather than LZ4::lz4 as expected by TileDB. Patched to handle both names.
++# This avoids a scenario on Windows where lz4_FOUND is true while no library is added.
++# On other platforms, lz4-c is built with makefile, which results in lz4_FOUND being false and
++# the find_library fallback being used instead.
  if (lz4_FOUND)
    if(TARGET LZ4::lz4 AND NOT TARGET lz4::lz4)
      add_library(lz4::lz4 ALIAS LZ4::lz4)
