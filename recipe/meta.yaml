@@ -8,9 +8,11 @@ package:
 source:
   url: https://github.com/TileDB-Inc/{{ name }}/archive/{{ version }}.tar.gz
   sha256: c5f94da6de0e0f93925f7ad107bd80fef0615f9b3d111a5bae245f75b1fcc173
+  patches:  # [win]
+    - patches/fix_lz4_target_name.patch  # [win]
 
 build:
-  number: 1
+  number: 2
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
@@ -47,7 +49,7 @@ requirements:
     - azure-storage-blobs-cpp {{ azure_storage_blobs_cpp }}
     - azure-storage-files-datalake-cpp 12.13.0
     - libwebp-base {{ libwebp }}
-    - nlohmann_json 3.11.2 # [win]
+    - nlohmann_json 3.11.2
 
 test:
   requires:
