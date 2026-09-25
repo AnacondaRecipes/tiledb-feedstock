@@ -49,7 +49,7 @@ requirements:
     - azure-storage-blobs-cpp {{ azure_storage_blobs_cpp }}
     - azure-storage-files-datalake-cpp 12.13.0
     - libwebp-base {{ libwebp }}
-    - nlohmann_json 3.11.2 # [win]
+    - nlohmann_json 3.11.2
 
 test:
   requires:
