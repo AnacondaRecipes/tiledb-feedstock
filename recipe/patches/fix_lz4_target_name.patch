@@ -1,0 +1,11 @@
+--- a/cmake/Modules/FindLZ4.cmake
++++ b/cmake/Modules/FindLZ4.cmake
+@@ -37,6 +37,8 @@ find_package(lz4 CONFIG)
+ if (lz4_FOUND)
+   if(TARGET LZ4::lz4 AND NOT TARGET lz4::lz4)
+     add_library(lz4::lz4 ALIAS LZ4::lz4)
++  elseif(TARGET LZ4::lz4_shared AND NOT TARGET lz4::lz4)
++    add_library(lz4::lz4 ALIAS LZ4::lz4_shared)
+   endif()
+   set(LZ4_FOUND TRUE)
+ else()
