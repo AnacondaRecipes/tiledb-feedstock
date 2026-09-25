@@ -3,6 +3,20 @@ setlocal EnableDelayedExpansion
 REM Copy tiledb-patches to the source directory
 xcopy /Y /S /I "%RECIPE_DIR%\tiledb-patches" "%SRC_DIR%"
 
+echo "===== [lz4-diag] does conda's own lz4-c package ship a CMake config? ====="
+dir /s /b "%LIBRARY_PREFIX%\cmake\lz4*" 2>nul
+dir /s /b "%LIBRARY_PREFIX%\share\lz4*" 2>nul
+dir /s /b "%LIBRARY_PREFIX%\lib\cmake\lz4*" 2>nul
+echo "===== [lz4-diag] if found, print contents ====="
+for /f "delims=" %%f in ('dir /s /b "%LIBRARY_PREFIX%\*lz4*config*.cmake" 2^>nul') do (
+    echo --- %%f ---
+    type "%%f"
+)
+echo "===== [lz4-diag] confirm the actual lz4 library/header conda installed ====="
+dir "%LIBRARY_PREFIX%\lib\lz4*" 2>nul
+dir "%LIBRARY_PREFIX%\include\lz4*" 2>nul
+echo "===== [lz4-diag] done ====="
+
 REM Regenerate the capnp serialization files with the version installed in Conda.
 REM This allows updating capnproto independently of upstream tiledb.
 %PREFIX%\Library\bin\capnp compile -I %PREFIX%\Library\include -oc++:%SRC_DIR%\tiledb\sm\serialization %SRC_DIR%\tiledb\sm\serialization\tiledb-rest.capnp --src-prefix=%SRC_DIR%\tiledb\sm\serialization
