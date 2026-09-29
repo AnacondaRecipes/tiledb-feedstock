@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/TileDB-Inc/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: c5f94da6de0e0f93925f7ad107bd80fef0615f9b3d111a5bae245f75b1fcc173
+  sha256: 36381f9eaa2a6defc8990aa1a95d1f0e87971748a50bf6fb705bf032ac7384cf
   #patches:  # [win]
   #  - patches/fix_lz4_target_name.patch  # [win]
 
