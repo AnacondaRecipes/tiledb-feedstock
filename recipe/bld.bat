@@ -28,7 +28,6 @@ cmake -G Ninja %CMAKE_ARGS% ^
       -DTILEDB_DISABLE_AUTO_VCPKG=ON ^
       -DVCPKG_TARGET_TRIPLET=x64-windows ^
       -DVCPKG_CMAKE_CONFIGURE_OPTIONS=-DCMAKE_FIND_DEBUG_MODE=TRUE ^
-      --trace-source=FindLZ4.cmake ^
       ..
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
