@@ -12,7 +12,7 @@ source:
     - patches/fix_lz4_target_name.patch  # [win]
 
 build:
-  number: 2
+  number: 3
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
@@ -36,7 +36,7 @@ requirements:
     - openssl {{ openssl }}
     - spdlog {{ spdlog }}
     - capnproto {{ capnproto }}
-    - libmagic 5.46
+    - libmagic 5  # [unix]
     - fmt {{ fmt }}
     - c-blosc2 {{ c_blosc2 }}
     - lz4-c {{ lz4_c }}
@@ -49,7 +49,7 @@ requirements:
     - azure-storage-blobs-cpp {{ azure_storage_blobs_cpp }}
     - azure-storage-files-datalake-cpp {{ azure_storage_files_datalake_cpp }}
     - libwebp-base {{ libwebp }}
-    - nlohmann_json 3.11.2
+    - nlohmann_json 3
 
 test:
   requires:
