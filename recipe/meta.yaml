@@ -53,7 +53,8 @@ requirements:
 
 test:
   requires:
-    - {{ compiler('cxx') }}  # [unix]
+    - {{ compiler('cxx') }}  # [linux]
+    # [osx] CBC clangxx 20 caps libcxx<22, but the azure-storage-* run deps need libcxx>=22
     - clangxx_osx-arm64 22.*  # [osx] 
     - cmake                  # [unix]
     - make                   # [unix]
