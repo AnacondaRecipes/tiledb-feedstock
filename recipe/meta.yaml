@@ -54,6 +54,7 @@ requirements:
 test:
   requires:
     - {{ compiler('cxx') }}  # [unix]
+    - clangxx_osx-arm64 22.*  # [osx] 
     - cmake                  # [unix]
     - make                   # [unix]
   commands:
