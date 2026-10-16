@@ -53,6 +53,7 @@ requirements:
 
 test:
   requires:
+    - {{ compiler('cxx') }}  # [unix]
     - cmake                  # [unix]
     - make                   # [unix]
   commands:
