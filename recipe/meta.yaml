@@ -12,7 +12,7 @@ source:
     - patches/fix_lz4_target_name.patch  # [win]
 
 build:
-  number: 4
+  number: 2
   run_exports:
     # https://abi-laboratory.pro/?view=timeline&l=tiledb
     - {{ pin_subpackage('tiledb', max_pin='x.x') }}
